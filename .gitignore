@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+.env
+
+dataset/*
+!dataset/.gitkeep
+
+model/*
+!model/.gitkeep
+
+*.h5
+*.keras
+*.pt
+*.pth
+*.zip
+.ipynb_checkpoints/
