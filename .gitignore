@@ -5,6 +5,10 @@ __pycache__/
 
 dataset/*
 !dataset/.gitkeep
+!dataset/
+!dataset/train/
+!dataset/val/
+!dataset/test/
 
 model/*
 !model/.gitkeep
