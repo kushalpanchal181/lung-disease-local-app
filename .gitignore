@@ -24,3 +24,11 @@ venv/
 __pycache__/
 *.pyc
 .env
+
+# Ignore dataset images and raw dataset
+raw_dataset/
+dataset/**/*
+
+# Keep dataset folder structure only
+!dataset/**/
+!dataset/**/.gitkeep
