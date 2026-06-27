@@ -19,3 +19,8 @@ model/*
 *.pth
 *.zip
 .ipynb_checkpoints/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
