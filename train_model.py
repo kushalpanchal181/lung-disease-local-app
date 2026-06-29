@@ -36,7 +36,7 @@ RESULTS_DIR.mkdir(exist_ok=True)
 # -----------------------------
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
-EPOCHS = 5
+EPOCHS = 10
 
 MODEL_PATH = MODEL_DIR / "lung_model.keras"
 CLASS_NAMES_PATH = MODEL_DIR / "class_names.json"
