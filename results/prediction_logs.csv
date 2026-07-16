@@ -1,0 +1,10 @@
+timestamp,model_name,model_version,predicted_class,confidence,calibrated_confidence,uncertainty,top_2_margin,git_commit
+2026-07-16 21:36:17,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:36:33,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:36:34,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:36:53,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:36:55,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:42:41,MobileNetV2-CXR,v1.0.0,Covid,98.43,92.34,1.57,97.29,721afc1
+2026-07-16 21:43:22,MobileNetV2-CXR,v1.0.0,Pneumonia,51.29,44.9,48.71,11.38,721afc1
+2026-07-16 21:43:58,MobileNetV2-CXR,v1.0.0,Pneumonia,51.29,44.9,48.71,11.38,721afc1
+2026-07-16 21:44:19,MobileNetV2-CXR,v1.0.0,Tuberculosis,99.01,94.14,0.99,98.31,721afc1

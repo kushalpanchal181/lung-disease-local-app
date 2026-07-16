@@ -43,7 +43,7 @@ CLASS_NAMES_PATH = MODEL_DIR / "class_names.json"
 
 
 # -----------------------------
-# Load dataset
+# Loading dataset
 # -----------------------------
 print("Loading dataset...")
 
@@ -80,7 +80,7 @@ with open(CLASS_NAMES_PATH, "w") as f:
 
 
 # -----------------------------
-# Improve performance
+# Improving performance
 # -----------------------------
 AUTOTUNE = tf.data.AUTOTUNE
 
@@ -100,7 +100,7 @@ data_augmentation = tf.keras.Sequential([
 
 
 # -----------------------------
-# Build transfer learning model
+# transfer learning model
 # -----------------------------
 base_model = tf.keras.applications.MobileNetV2(
     input_shape=(224, 224, 3),
@@ -108,13 +108,23 @@ base_model = tf.keras.applications.MobileNetV2(
     weights="imagenet"
 )
 
-base_model.trainable = False
+base_model.trainable = True
+
+for layer in base_model.layers[:-30]:
+    layer.trainable = False
 
 inputs = tf.keras.Input(shape=(224, 224, 3))
 x = data_augmentation(inputs)
 x = tf.keras.applications.mobilenet_v2.preprocess_input(x)
 x = base_model(x, training=False)
 x = tf.keras.layers.GlobalAveragePooling2D()(x)
+
+x = tf.keras.layers.Dense(256, activation="relu")(x)
+x = tf.keras.layers.BatchNormalization()(x)
+x = tf.keras.layers.Dropout(0.4)(x)
+
+x = tf.keras.layers.Dense(128, activation="relu")(x)
+x = tf.keras.layers.BatchNormalization()(x)
 x = tf.keras.layers.Dropout(0.3)(x)
 
 outputs = tf.keras.layers.Dense(num_classes, activation="softmax")(x)
@@ -122,7 +132,7 @@ outputs = tf.keras.layers.Dense(num_classes, activation="softmax")(x)
 model = tf.keras.Model(inputs, outputs)
 
 model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.00001),
     loss="categorical_crossentropy",
     metrics=["accuracy"]
 )
@@ -131,7 +141,7 @@ model.summary()
 
 
 # -----------------------------
-# Train model
+# Training the model
 # -----------------------------
 print("Training model...")
 
@@ -183,7 +193,7 @@ plt.close()
 
 
 # -----------------------------
-# Evaluate model
+# Evaluating model
 # -----------------------------
 print("Evaluating model...")
 
