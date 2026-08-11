@@ -1,0 +1,18 @@
+{
+  "model_name": "MobileNetV2-CXR",
+  "model_version": "v1.0.0",
+  "dataset_version": "CXR-4Class-v1",
+  "training_classes": ["Covid", "Normal", "Pneumonia", "Tuberculosis"],
+  "framework": "TensorFlow/Keras",
+  "base_model": "MobileNetV2",
+  "deployment_environment": "Local Streamlit Prototype",
+  "container_version": "Not containerised yet",
+  "approval_status": "Academic prototype - not clinically approved",
+  "deployment_date": "2026-06-27",
+  "git_commit": "Add after GitHub commit",
+  "performance_baseline": {
+    "validation_accuracy": "0.90",
+    "test_accuracy": "Check evaluation_metrics.csv",
+    "metrics": ["Accuracy", "Precision", "Recall", "F1 Score", "Confusion Matrix"]
+  }
+}
