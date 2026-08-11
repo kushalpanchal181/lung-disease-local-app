@@ -1,0 +1,32 @@
+name: Python Project CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  code-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Upgrade pip
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install lightweight dependencies
+        run: |
+          pip install numpy pandas pillow matplotlib scikit-learn opencv-python streamlit
+
+      - name: Check Python syntax
+        run: |
+          python -m compileall app.py explainability.py clean_dataset.py split_dataset.py train_model.py train_baseline.py generate_visual_comparisons.py

@@ -13,6 +13,7 @@ from sklearn.metrics import (
     recall_score,
     f1_score
 )
+from sklearn.utils.class_weight import compute_class_weight
 
 
 # -----------------------------
@@ -78,6 +79,27 @@ print("Number of classes:", num_classes)
 with open(CLASS_NAMES_PATH, "w") as f:
     json.dump(class_names, f)
 
+print("Calculating class weights...")
+
+train_labels = []
+
+for _, labels in train_ds:
+    train_labels.extend(np.argmax(labels.numpy(), axis=1))
+
+train_labels = np.array(train_labels)
+
+class_weights_values = compute_class_weight(
+    class_weight="balanced",
+    classes=np.arange(num_classes),
+    y=train_labels
+)
+
+class_weights = {
+    i: float(class_weights_values[i])
+    for i in range(num_classes)
+}
+
+print("Class weights:", class_weights)
 
 # -----------------------------
 # Improving performance
@@ -94,8 +116,9 @@ test_ds = test_ds.prefetch(buffer_size=AUTOTUNE)
 # -----------------------------
 data_augmentation = tf.keras.Sequential([
     tf.keras.layers.RandomFlip("horizontal"),
-    tf.keras.layers.RandomRotation(0.05),
-    tf.keras.layers.RandomZoom(0.10),
+    tf.keras.layers.RandomRotation(0.03),
+    tf.keras.layers.RandomZoom(0.08),
+    tf.keras.layers.RandomContrast(0.10),
 ])
 
 
@@ -157,7 +180,8 @@ history = model.fit(
     train_ds,
     validation_data=val_ds,
     epochs=EPOCHS,
-    callbacks=callbacks
+    callbacks=callbacks,
+    class_weight=class_weights
 )
 
 

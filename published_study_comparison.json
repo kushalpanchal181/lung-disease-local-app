@@ -1,0 +1,9 @@
+{
+  "published_study": "Kundu et al. (2021) - Pneumonia detection in chest X-ray images using an ensemble of deep learning models",
+  "published_method": "Ensemble of GoogLeNet, ResNet-18 and DenseNet-121",
+  "published_dataset": "Kermany Chest X-ray Pneumonia Dataset",
+  "published_metric_name": "Accuracy",
+  "published_value": 0.9881,
+  "proposed_metric_name": "Accuracy",
+  "note": "This comparison is contextual because the published study used a pneumonia chest X-ray dataset, while this project uses a four-class dataset including Covid, Normal, Pneumonia and Tuberculosis."
+}

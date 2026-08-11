@@ -31,7 +31,7 @@ RESULTS_DIR = BASE_DIR / "results"
 PREDICTION_LOG_PATH = RESULTS_DIR / "prediction_logs.csv"
 EVALUATION_METRICS_PATH = RESULTS_DIR / "evaluation_metrics.csv"
 CLASSIFICATION_REPORT_PATH = RESULTS_DIR / "classification_report.txt"
-
+VISUAL_COMPARISON_DIR = RESULTS_DIR / "visual_comparisons"
 RESULTS_DIR.mkdir(exist_ok=True)
 
 
@@ -46,7 +46,10 @@ st.set_page_config(
 )
 
 st.title("AI-Based Lung Disease Detection and MLOps Dashboard")
-
+st.write(
+    "This prototype demonstrates chest X-ray classification, explainability, "
+    "prediction monitoring and MLOps traceability for academic evaluation."
+)
 st.warning(
     "This is an academic prototype only. It is not a medical diagnosis system "
     "and should not be used for real clinical decisions."
@@ -158,8 +161,8 @@ class_names = load_class_names()
 # Main tabs
 # --------------------------------------------------
 
-prediction_tab, mlops_tab = st.tabs(
-    ["Prediction Dashboard", "MLOps Dashboard"]
+prediction_tab, mlops_tab, visual_tab = st.tabs(
+    ["Prediction Dashboard", "MLOps Dashboard", "Visual Comparisons"]
 )
 
 
@@ -246,11 +249,11 @@ with prediction_tab:
                 f"{calibrated_confidence:.2f}%"
             )
 
-            if confidence < 70:
-                col6.warning("Prediction Status: Uncertain")
+            if confidence < 70 or top_2_margin < 15:
+                col6.warning("Prediction Status: Review Required")
             else:
                 col6.success("Prediction Status: Confident")
-
+                
             st.caption(
                 "Calibrated confidence is shown as a prototype temperature-adjusted score. "
                 "For final clinical-style calibration, the temperature should be tuned using validation data."
@@ -285,6 +288,7 @@ with prediction_tab:
 
             st.caption(
                 "These heatmaps show model-focused regions that contributed to the prediction. "
+                "Blue indicates lower model attention, while yellow/red indicates stronger model attention. "
                 "They are used for AI explainability only and do not confirm the clinically affected area."
             )
 
@@ -521,4 +525,37 @@ with mlops_tab:
         "This dashboard supports MLOps traceability by showing model version, "
         "dataset version, Git commit, deployment status, approval status, "
         "performance baseline and prediction monitoring logs."
+    )
+    
+with visual_tab:
+    st.header("Visual Comparison Results")
+
+    st.write(
+        "This section presents clear visual comparisons for the image analysis pipeline, "
+        "including preprocessing, prediction outputs, baseline comparison, proposed method comparison "
+        "and contextual comparison with a published study."
+    )
+
+    visual_files = [
+        ("Sample Images Before and After Preprocessing", "01_preprocessing_comparison.png"),
+        ("Input Images with Prediction Results", "02_input_prediction_comparison.png"),
+        ("Evaluation Results: Baseline vs Proposed Method", "03_baseline_vs_proposed_metrics.png"),
+        ("Before and After Applying Proposed AI Technique", "04_before_after_ai_technique.png"),
+        ("Published Study vs Proposed Method", "05_published_vs_proposed_comparison.png")
+    ]
+
+    for title, filename in visual_files:
+        st.subheader(title)
+        image_path = VISUAL_COMPARISON_DIR / filename
+
+        if image_path.exists():
+            st.image(str(image_path), use_container_width=True)
+        else:
+            st.warning(
+                f"{filename} not found. Run python generate_visual_comparisons.py first."
+            )
+
+    st.info(
+        "All visualisations are for academic evaluation. Published-study comparison should be treated "
+        "as contextual if the datasets, disease classes or evaluation settings are different."
     )
