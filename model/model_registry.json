@@ -5,14 +5,14 @@
   "training_classes": ["Covid", "Normal", "Pneumonia", "Tuberculosis"],
   "framework": "TensorFlow/Keras",
   "base_model": "MobileNetV2",
-  "deployment_environment": "Local Streamlit Prototype",
-  "container_version": "Not containerised yet",
+  "deployment_environment": "AWS EC2 Docker Streamlit Deployment",
+  "container_version": "Docker image: lung-disease-app:v1",
   "approval_status": "Academic prototype - not clinically approved",
-  "deployment_date": "2026-06-27",
-  "git_commit": "Add after GitHub commit",
+  "deployment_date": "2026-08-11",
+  "git_commit": "GitHub version-controlled",
   "performance_baseline": {
     "validation_accuracy": "0.90",
-    "test_accuracy": "Check evaluation_metrics.csv",
+    "test_accuracy": "0.9149",
     "metrics": ["Accuracy", "Precision", "Recall", "F1 Score", "Confusion Matrix"]
   }
 }

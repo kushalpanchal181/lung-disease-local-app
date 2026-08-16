@@ -2,8 +2,11 @@ version: "3.9"
 
 services:
   lung-disease-app:
-    build: .
-    container_name: lung-disease-local-app
+    build:
+      context: .
+      args:
+        GIT_COMMIT: ${GIT_COMMIT:-Not available}
+    container_name: lung-disease-app
     ports:
       - "8501:8501"
     volumes:

@@ -12,3 +12,4 @@ dataset/
 *.zip
 
 screenshots/
+model/*.h5
