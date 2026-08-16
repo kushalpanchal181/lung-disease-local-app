@@ -11,4 +11,5 @@ services:
       - ./model:/app/model
     environment:
       - GIT_COMMIT=${GIT_COMMIT}
+      - DEPLOYMENT_DATE=${DEPLOYMENT_DATE}
     restart: unless-stopped

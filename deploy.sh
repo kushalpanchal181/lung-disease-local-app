@@ -3,9 +3,11 @@ set -e
 
 GIT_COMMIT=$(git rev-parse --short HEAD)
 
-echo "GIT_COMMIT=$GIT_COMMIT" > .env
+GIT_COMMIT=$(git rev-parse --short HEAD)
+DEPLOYMENT_DATE=$(date +%Y-%m-%d)
 
-echo "Deploying Git commit: $GIT_COMMIT"
+echo "GIT_COMMIT=$GIT_COMMIT" > .env
+echo "DEPLOYMENT_DATE=$DEPLOYMENT_DATE" >> .env
 
 sudo docker compose up -d --build
 

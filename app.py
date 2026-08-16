@@ -443,7 +443,7 @@ with mlops_tab:
             "deployment_environment": "Local Streamlit Prototype",
             "container_version": "Not containerised yet",
             "approval_status": "Academic prototype - not clinically approved",
-            "deployment_date": "2026-06-27",
+            "deployment_date": os.getenv("DEPLOYMENT_DATE", "Not available"),
             "git_commit": get_git_commit(),
             "performance_baseline": {
                 "validation_accuracy": "0.90",
