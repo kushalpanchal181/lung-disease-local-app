@@ -110,7 +110,11 @@ def get_git_commit():
         pass
 
     registry = load_model_registry()
-    return registry.get("git_commit", "Not available")
+
+    if registry:
+        return registry.get("git_commit", "Not available")
+
+    return "Not available"
 
 
 def apply_temperature_scaling(probabilities, temperature=1.5):
@@ -485,7 +489,7 @@ with mlops_tab:
             "Approval Status"
         ],
         "Value": [
-            registry.get("git_commit", get_git_commit()),
+            get_git_commit(),
             registry.get("container_version", "Not containerised yet"),
             registry.get("deployment_date", "Not available"),
             registry.get("approval_status", "Academic prototype - not clinically approved")
@@ -518,18 +522,17 @@ with mlops_tab:
 
     st.write("### Prediction Monitoring Logs")
 
-    if PREDICTION_LOG_PATH.exists:
-        if PREDICTION_LOG_PATH.exists():
-            logs_df = pd.read_csv(PREDICTION_LOG_PATH)
-            st.dataframe(logs_df.tail(20), use_container_width=True)
+    if PREDICTION_LOG_PATH.exists():
+        logs_df = pd.read_csv(PREDICTION_LOG_PATH)
+        st.dataframe(logs_df.tail(20), use_container_width=True)
 
-            st.caption(
-                "This log supports MLOps monitoring by storing prediction time, "
-                "model version, predicted class, confidence, uncertainty, "
-                "top-2 margin and Git commit."
-            )
-        else:
-            st.info("No prediction logs available yet. Upload an image first.")
+        st.caption(
+            "This log supports MLOps monitoring by storing prediction time, "
+            "model version, predicted class, confidence, uncertainty, "
+            "top-2 margin and Git commit."
+        )
+    else:
+        st.info("No prediction logs available yet. Upload an image first.")
 
     st.info(
         "This dashboard supports MLOps traceability by showing model version, "

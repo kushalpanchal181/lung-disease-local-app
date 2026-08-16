@@ -9,7 +9,7 @@
   "container_version": "Docker image: lung-disease-app:v1",
   "approval_status": "Academic prototype - not clinically approved",
   "deployment_date": "2026-08-11",
-  "git_commit": "GitHub version-controlled",
+  "git_commit": "Not available",
   "performance_baseline": {
     "validation_accuracy": "0.90",
     "test_accuracy": "0.9149",
