@@ -483,7 +483,10 @@ with mlops_tab:
         "Value": [
             get_git_commit(),
             registry.get("container_version", "Not containerised yet"),
-            registry.get("deployment_date", "Not available"),
+            os.getenv(
+                "DEPLOYMENT_DATE",
+                registry.get("deployment_date", "Not available")
+            ),
             registry.get("approval_status", "Academic prototype - not clinically approved")
         ]
     })
