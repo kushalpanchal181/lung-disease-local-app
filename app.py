@@ -90,31 +90,23 @@ def load_model_registry():
 
 
 def get_git_commit():
-    env_commit = os.environ.get("GIT_COMMIT")
+    """
+    Gets the Git commit hash from the deployment environment.
+    Falls back to the local Git repository during development.
+    """
+    env_commit = os.getenv("GIT_COMMIT")
 
-    if env_commit and env_commit != "Not available":
+    if env_commit:
         return env_commit
 
     try:
-        result = subprocess.run(
+        commit = subprocess.check_output(
             ["git", "rev-parse", "--short", "HEAD"],
-            capture_output=True,
-            text=True,
             cwd=BASE_DIR
         )
-
-        if result.returncode == 0:
-            return result.stdout.strip()
-
+        return commit.decode("utf-8").strip()
     except Exception:
-        pass
-
-    registry = load_model_registry()
-
-    if registry:
-        return registry.get("git_commit", "Not available")
-
-    return "Not available"
+        return "Not available"
 
 
 def apply_temperature_scaling(probabilities, temperature=1.5):
